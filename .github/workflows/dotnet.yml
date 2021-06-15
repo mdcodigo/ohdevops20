@@ -21,8 +21,8 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
-      run: dotnet restore /apis/poi/poi.sln
+      run: dotnet restore apis/poi/poi.sln
     - name: Build
-      run: dotnet build --no-restore /apis/poi/poi.sln
+      run: dotnet build --no-restore apis/poi/poi.sln
     - name: Test
-      run: dotnet test --no-build --verbosity normal /apis/poi/poi.sln
+      run: dotnet test --no-build --verbosity normal apis/poi/poi.sln
