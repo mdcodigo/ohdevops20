@@ -27,7 +27,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore apis/poi/poi.sln
     - name: Test
-      run: dotnet test --no-build --verbosity normal apis/poi/poi.sln1
+      run: dotnet test --no-build --verbosity normal apis/poi/poi.sln
 #Opens An Issue Only When CI Fails
     - uses: actions/github-script@0.9.0
       if: failure()
