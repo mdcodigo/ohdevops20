@@ -1,6 +1,6 @@
 
 # POI Service
-### Dummy v0.1.6
+### Dummy v0.1.7
 ## Overview
 
 ## Build the Application
