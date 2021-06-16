@@ -44,14 +44,14 @@ jobs:
           
   docker_build_and_push:
   #if: github.ref == 'refs/heads/master'
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     needs: build
 
     steps:
     - uses: actions/checkout@v2
     
     - name: Docker login
-      run: docker login openhackwfs1ej01acr.azurecr.io -u "${{ secrets.DOCKER_USER }}" -p "${{ secrets.GITHUB_TOKEN }}"
+      run: docker login openhackwfs1ej01acr.azurecr.io -u "f23444b1-03e6-42fb-b4ba-e7b181a24656" -p ${{ secrets.ACR_KEY }}
     - name: Docker build
       run: docker build -t openhackwfs1ej01acr.azurecr.io/devopsoh/api-poi:${{github.run_number}} --build-arg build_version=${{github.run_number}} apis/poi/
     - name: Docker Push
