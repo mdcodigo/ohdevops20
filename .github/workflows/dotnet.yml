@@ -50,8 +50,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Docker login
-      run: docker login openhackwfs1ej01acr.azurecr.io -u "f23444b1-03e6-42fb-b4ba-e7b181a24656" -p ${{ secrets.ACR_KEY }}
+    #- name: Docker login
+    - shell: bash
+      name: Docker Login
+      env:
+        ACR_KEY: ${{ secrets.ACR_KEY }}    
+      run: docker login openhackwfs1ej01acr.azurecr.io -u "f23444b1-03e6-42fb-b4ba-e7b181a24656" -p "$ACR_KEY"
     - name: Docker build
       run: docker build -t openhackwfs1ej01acr.azurecr.io/devopsoh/api-poi:${{github.run_number}} --build-arg build_version=${{github.run_number}} apis/poi/
     - name: Docker Push
