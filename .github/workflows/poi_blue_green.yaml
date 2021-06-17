@@ -17,7 +17,8 @@ on:
     branches: [ master ]
     paths: 
       - apis/poi/**  
-#      - .github/workflows/poi.yml
+      #*** Only for dev pourpourses ;) ***
+      - .github/workflows/poi_blue_green.yaml
 #  pull_request:
 #    branches: [ master ]
 #    paths: 
