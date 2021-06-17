@@ -56,7 +56,7 @@ jobs:
       env:
         ACR_KEY: ${{ secrets.ACR_KEY }}
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
-      run: docker login openhackwfs1ej01acr.azurecr.io -u "$DOCKER_USER" -p "$ACR_KEY"
+      run: docker login openhackxqzxmauhbxtiiacr.azurecr.io -u "$DOCKER_USER" -p "$ACR_KEY"
     - name: Docker build
       run: docker build -t openhackwfs1ej01acr.azurecr.io/devopsoh/api-poi:${{github.run_number}} --build-arg build_version=${{github.run_number}} apis/poi/web
     - name: Docker Push
