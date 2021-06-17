@@ -77,4 +77,5 @@ jobs:
       with:
         app-name: ${{ env.webapp_name }}
         slot-name: staging
-        images: openhackxqzxmauhbxtiiacr.azurecr.io/devopsoh/api-poi:7
+        #images: openhackxqzxmauhbxtiiacr.azurecr.io/devopsoh/api-poi:7
+        images: ${{ env.registry }}/${{ env.repository }}:${{github.run_number}}  
