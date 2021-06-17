@@ -67,4 +67,5 @@ jobs:
         #READ FIRST!
         #https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli
         #https://docs.microsoft.com/en-us/azure/app-service/deploy-container-github-action?tabs=service-principal#configure-the-github-secret-for-authentication
+        #az ad sp create-for-rbac --name "sp_openhack_devops20_ghactions" --role contributor --scopes /subscriptions/<suscription id guid>/resourcegroups/<rg name> --sdk-auth
         creds: ${{ secrets.AZURE_CREDENTIALS  }}
