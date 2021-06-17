@@ -2,7 +2,7 @@ name: POI CD
 
 env:
   poi_path: apis/poi/**
-  registry: openhackxqzxmauhbxtiiacr
+  registry: openhackxqzxmauhbxtiiacr.azurecr.io
   repository: devopsoh/api-poi
   docker_path: apis/poi/web
   staging_url: https://openhackdevopsapp-poi-0x001-staging.azurewebsites.net
