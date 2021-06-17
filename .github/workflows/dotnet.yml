@@ -11,6 +11,10 @@ on:
     paths:    
       - 'apis/poi/**'
       - '.github/workflows/dotnet.yml'
+      
+env:
+  ACR_URL: 'openhackxqzxmauhbxtiiacr.azurecr.io'
+      
 jobs:
   build:
 
@@ -56,8 +60,16 @@ jobs:
       env:
         ACR_KEY: ${{ secrets.ACR_KEY }}
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
-      run: docker login openhackxqzxmauhbxtiiacr.azurecr.io -u "$DOCKER_USER" -p "$ACR_KEY"
-    - name: Docker build
-      run: docker build -t openhackwfs1ej01acr.azurecr.io/devopsoh/api-poi:${{github.run_number}} --build-arg build_version=${{github.run_number}} apis/poi/web
-    - name: Docker Push
-      run: docker push openhackwfs1ej01acr.azurecr.io/devopsoh/api-poi:${{github.run_number}}
+        ACR: ${{ env.ACR_URL}}
+      run: docker login "$ACR" -u "$DOCKER_USER" -p "$ACR_KEY"
+    - shell: bash
+      name: Docker build
+      env:
+        ACR: ${{ env.ACR_URL}}
+      run: docker build -t "$ACR"/devopsoh/api-poi:${{github.run_number}} --build-arg build_version=${{github.run_number}} apis/poi/web
+      
+    - shell: bash
+      name: Docker Push
+      env:
+        ACR: ${{ env.ACR_URL}}      
+      run: docker push "$ACR"/devopsoh/api-poi:${{github.run_number}}
