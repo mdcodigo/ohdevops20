@@ -67,9 +67,11 @@ jobs:
       env:
         ACR: ${{ env.ACR_URL}}
       run: docker build -t "$ACR"/devopsoh/api-poi:${{github.run_number}} --build-arg build_version=${{github.run_number}} apis/poi/web
-      
-    - shell: bash
-      name: Docker Push
-      env:
-        ACR: ${{ env.ACR_URL}}      
-      run: docker push "$ACR"/devopsoh/api-poi:${{github.run_number}}
+# *******************************************************
+#   The Image Push should be done via CD so here we only check that compiles, test passes and the image can be built ;)     
+# *******************************************************
+#    - shell: bash
+#      name: Docker Push
+#      env:
+#        ACR: ${{ env.ACR_URL}}      
+#      run: docker push "$ACR"/devopsoh/api-poi:${{github.run_number}}
