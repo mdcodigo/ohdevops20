@@ -96,6 +96,7 @@ jobs:
        URL: ${{ env.staging_url }}
       #run: curl -s -w "%{http_code}" "$URL"/api/docs/poi ; if [ $? -lt "400" ]; then echo " 0K"; else exit 1; fi
       run: |
+        sleep 15
         res=$(curl -s -w "%{http_code}" -o resp.txt "$URL"/api/healthcheck/poi); if [ $res -eq 200 ]; then echo "HTTP:"$res; else exit $res; fi
         cat resp.txt
         if grep -q "Healthy" resp.txt ; then echo "API POI Healthy"; else exit 2; fi
