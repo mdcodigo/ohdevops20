@@ -78,4 +78,33 @@ jobs:
         app-name: ${{ env.webapp_name }}
         slot-name: staging
         #images: openhackxqzxmauhbxtiiacr.azurecr.io/devopsoh/api-poi:7
-        images: ${{ env.registry }}/${{ env.repository }}:${{github.run_number}}  
+        images: ${{ env.registry }}/${{ env.repository }}:${{github.run_number}} 
+
+#Job 3/
+#  validate_staging:
+#    if: github.ref == 'refs/heads/master'
+#    runs-on: ubuntu-latest
+#    needs: deploy_staging
+#    steps:
+    
+#    - name: Tag Validation Container
+#      run: docker tag devopsoh/api-poi:7 openhackxqzxmauhbxtiiacr.azurecr.io/devopsoh/api-poi:staging-v7
+# docker push openhackxqzxmauhbxtiiacr.azurecr.io/devopsoh/api-poi:staging-v7
+
+    - name: Web Validate
+      env:
+       URL: ${{ secrets.staging_url }}
+      run: curl -s -w "%{http_code}" "$URL"/api/docs/poi ; if [ $? -lt "400" ]; then echo " 0K"; else exit 1; fi
+
+    - uses: actions/github-script@0.9.0
+      if: failure()
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+          let body = "${{ env.build_name }} Worflow Staging Web Test Failure \n Build Number: ${{ github.run_number }} \n Build Log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }} \n SHA: [${{ github.sha }}](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) \n";
+          github.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: "${{ env.build_name }} Workflow ${{ github.run_number }} Staging Web Test Failed! ",
+            body: body
+          });
