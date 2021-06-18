@@ -65,9 +65,12 @@ jobs:
         # Push is a shorthand for --output=type=registry
         push: true # optional, default is false
         tags: # optional
-          ${{ env.ACR_URL}}/devopsoh/api-poi:${{github.run_number}}
-          devopsoh/api-poi:latest
-          
+          ${{ env.ACR_URL}}/devopsoh/api-poi:${{github.run_number}}         
+        # List of metadata for an image
+        labels: # optional
+          ${{github.run_number}}
+#          latest
+#          staging          
         # List of extra privileged entitlement (eg. network.host,security.insecure)
         #allow: # optional
         # List of build-time variables
@@ -80,11 +83,6 @@ jobs:
         #cache-to: # optional
         # Path to the Dockerfile
         #file: # optional
-        # List of metadata for an image
-#        labels: # optional
-#          ${{github.run_number}}
-#          latest
-#          staging
         # Load is a shorthand for --output=type=docker
         #load: # optional, default is false
         # Set the networking mode for the RUN instructions during build
