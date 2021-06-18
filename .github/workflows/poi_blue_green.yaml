@@ -60,6 +60,14 @@ jobs:
        # uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
        uses: docker/build-push-action@v2.5.0
        with:
+        # Build's context is the set of files located in the specified PATH or URL
+        context: apis/poi/web # optional
+        # Push is a shorthand for --output=type=registry
+        push: true # optional, default is false
+        tags: # optional
+          ${{ env.ACR_URL}}/devopsoh/api-poi:${{github.run_number}}
+          devopsoh/api-poi:latest
+          
         # List of extra privileged entitlement (eg. network.host,security.insecure)
         #allow: # optional
         # List of build-time variables
@@ -70,8 +78,6 @@ jobs:
         #cache-from: # optional
         # List of cache export destinations for buildx (eg. user/app:cache, type=local,dest=path/to/dir)
         #cache-to: # optional
-        # Build's context is the set of files located in the specified PATH or URL
-        context: apis/poi/web # optional
         # Path to the Dockerfile
         #file: # optional
         # List of metadata for an image
@@ -91,8 +97,6 @@ jobs:
         #platforms: # optional
         # Always attempt to pull a newer version of the image
         #pull: # optional, default is false
-        # Push is a shorthand for --output=type=registry
-        push: true # optional, default is false
         # List of secrets to expose to the build (eg. key=string, GIT_AUTH_TOKEN=mytoken)
         #secrets: # optional
         # List of secret files to expose to the build (eg. key=filename, MY_SECRET=./secret.txt)
@@ -100,9 +104,6 @@ jobs:
         # List of SSH agent socket or keys to expose to the build
         #ssh: # optional
         # List of tags
-        tags: # optional
-          ${{ env.ACR_URL}}/devopsoh/api-poi:latest
-          ${{ env.ACR_URL}}/devopsoh/api-poi:${{github.run_number}}
         # Sets the target stage to build
         #target: # optional
         # GitHub Token used to authenticate against a repository for Git context
