@@ -68,9 +68,9 @@ jobs:
           ${{ env.ACR_URL}}/devopsoh/api-poi:${{github.run_number}}         
         # List of metadata for an image
         labels: # optional
-          ${{github.run_number}}
-#          latest
-#          staging          
+#          ${{github.run_number}}
+          latest
+          staging          
         # List of extra privileged entitlement (eg. network.host,security.insecure)
         #allow: # optional
         # List of build-time variables
