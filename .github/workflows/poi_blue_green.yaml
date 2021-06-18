@@ -29,6 +29,7 @@ jobs:
 #Job 1/
   docker_build_and_push:
      if: github.ref == 'refs/heads/master'
+     name: Dcoker Build Push & Web App Statging
      runs-on: ubuntu-latest
      #needs: build
 
@@ -53,59 +54,61 @@ jobs:
        name: Docker Push
        env:
          ACR: ${{ env.ACR_URL}}      
-       run: docker push "$ACR"/devopsoh/api-poi:${{github.run_number}}
+       run: |
+        docker push "$ACR"/devopsoh/api-poi:${{github.run_number}}
+        docker push "$ACR"/devopsoh/api-poi:latest
 
 #Job 2/
-  deploy_staging:
-    if: github.ref == 'refs/heads/master'
-    runs-on: ubuntu-latest
-    needs: docker_build_and_push
+#  deploy_staging:
+#    if: github.ref == 'refs/heads/master'
+#    runs-on: ubuntu-latest
+#    needs: docker_build_and_push
+#    steps:
 
-    steps:
-
-    - name: Azure authentication
-      uses: azure/login@v1
-      with:
-        #READ FIRST!
-        #https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli
-        #https://docs.microsoft.com/en-us/azure/app-service/deploy-container-github-action?tabs=service-principal#configure-the-github-secret-for-authentication
-        #az ad sp create-for-rbac --name "sp_openhack_devops20_ghactions" --role contributor --scopes /subscriptions/<suscription id guid>/resourcegroups/<rg name> --sdk-auth
-        creds: ${{ secrets.AZURE_CREDENTIALS  }}
+     - name: Azure authentication
+       uses: azure/login@v1
+       with:
+          creds: ${{ secrets.AZURE_CREDENTIALS  }}
+          #READ FIRST!
+          #https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli
+          #https://docs.microsoft.com/en-us/azure/app-service/deploy-container-github-action?tabs=service-principal#configure-the-github-secret-for-authentication
+          #az ad sp create-for-rbac --name "sp_openhack_devops20_ghactions" --role contributor --scopes /subscriptions/<suscription id guid>/resourcegroups/<rg name> --sdk-auth
+          
         
-    - name: Azure WebApp
-      uses: Azure/webapps-deploy@v2
-      with:
+     - name: Azure WebApp
+       uses: Azure/webapps-deploy@v2
+       with:
         app-name: ${{ env.webapp_name }}
         slot-name: staging
         #images: openhackxqzxmauhbxtiiacr.azurecr.io/devopsoh/api-poi:7
         images: ${{ env.registry }}/${{ env.repository }}:${{github.run_number}} 
 
-#Job 3/
-#  validate_staging:
-#    if: github.ref == 'refs/heads/master'
-#    runs-on: ubuntu-latest
-#    needs: deploy_staging
-#    steps:
+#Job 2/
+  validate_staging:
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    needs: docker_build_and_push
+    steps:
     
 #    - name: Tag Validation Container
 #      run: docker tag devopsoh/api-poi:7 openhackxqzxmauhbxtiiacr.azurecr.io/devopsoh/api-poi:staging-v7
 # docker push openhackxqzxmauhbxtiiacr.azurecr.io/devopsoh/api-poi:staging-v7
 
-    - name: Web Validate
-      env:
-       URL: ${{ env.staging_url }}
+      - name: Web Validate
+        env:
+         URL: ${{ env.staging_url }}
       #run: curl -s -w "%{http_code}" "$URL"/api/docs/poi ; if [ $? -lt "400" ]; then echo " 0K"; else exit 1; fi
-      run: |
-        sleep 15
-        res=$(curl -s -w "%{http_code}" -o resp.txt "$URL"/api/healthcheck/poi); if [ $res -eq 200 ]; then echo "HTTP:"$res; else exit $res; fi
-        cat resp.txt
-        if grep -q "Healthy" resp.txt ; then echo "API POI Healthy"; else exit 2; fi
+        run: |
+         sleep 15
+         res=$(curl -s -w "%{http_code}" -o resp.txt "$URL"/api/healthcheck/poi); if [ $res -eq 200 ]; then echo "HTTP:"$res; else exit $res; fi
+         cat resp.txt
+         if grep -q "Healthy" resp.txt ; then echo "API POI Healthy"; else exit 2; fi
 
-    - uses: actions/github-script@0.9.0
-      if: failure()
-      with:
-        github-token: ${{secrets.GITHUB_TOKEN}}
-        script: |
+      - uses: actions/github-script@0.9.0
+        if: failure()
+        with:
+         github-token: ${{secrets.GITHUB_TOKEN}}
+         script: |
           let body = "${{ env.build_name }} Worflow Staging Web Test Failure \n Build Number: ${{ github.run_number }} \n Build Log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }} \n SHA: [${{ github.sha }}](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) \n";
           github.issues.create({
             owner: context.repo.owner,
@@ -113,3 +116,29 @@ jobs:
             title: "${{ env.build_name }} Workflow ${{ github.run_number }} Staging Web Test Failed! ",
             body: body
           });
+
+#Job 3/
+  taging_staging:
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    needs: validate_staging
+    steps:
+
+      - shell: bash
+        name: Docker Login
+        env:
+          ACR_KEY: ${{ secrets.ACR_KEY }}
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          ACR: ${{ env.ACR_URL}}
+        run: docker login "$ACR" -u "$DOCKER_USER" -p "$ACR_KEY"        
+        
+      - shell: bash
+        name: Docker Pull latest / Tag staging / Push
+        env:
+          ACR_KEY: ${{ secrets.ACR_KEY }}
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          ACR: ${{ env.ACR_URL}}
+        run: |
+          docker pull openhackxqzxmauhbxtiiacr.azurecr.io/devopsoh/api-poi:latest
+          docker tag openhackxqzxmauhbxtiiacr.azurecr.io/devopsoh/api-poi:latest openhackxqzxmauhbxtiiacr.azurecr.io/devopsoh/api-poi:staging
+          docker push openhackxqzxmauhbxtiiacr.azurecr.io/devopsoh/api-poi:staging
