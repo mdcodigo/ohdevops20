@@ -92,7 +92,7 @@ jobs:
         # Always attempt to pull a newer version of the image
         #pull: # optional, default is false
         # Push is a shorthand for --output=type=registry
-        #push: # optional, default is false
+        push: true # optional, default is false
         # List of secrets to expose to the build (eg. key=string, GIT_AUTH_TOKEN=mytoken)
         #secrets: # optional
         # List of secret files to expose to the build (eg. key=filename, MY_SECRET=./secret.txt)
@@ -102,6 +102,7 @@ jobs:
         # List of tags
         tags: # optional
           ${{ env.ACR_URL}}/devopsoh/api-poi:latest
+          ${{ env.ACR_URL}}/devopsoh/api-poi:${{github.run_number}}
         # Sets the target stage to build
         #target: # optional
         # GitHub Token used to authenticate against a repository for Git context
