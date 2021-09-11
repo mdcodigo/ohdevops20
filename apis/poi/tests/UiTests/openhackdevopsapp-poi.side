@@ -104,6 +104,66 @@
       ],
       "value": ""
     }]
+  }, {
+    "id": "04cd767f-1ce2-4332-82f3-7a13cf6e0757",
+    "name": "TestSwaggerHealthProbe",
+    "commands": [{
+      "id": "def6d562-f7ce-48f8-9408-1cd9ae4d0094",
+      "comment": "",
+      "command": "open",
+      "target": "/api/docs/poi/index.html",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c93d5270-b65f-4711-964b-dd9232c1b48e",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "516x690",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1538a0bc-4a7e-4cae-b26e-ff93cbb87912",
+      "comment": "",
+      "command": "click",
+      "target": "css=#operations-HealthCheck-ApiHealthcheckPoiGet .opblock-summary-method",
+      "targets": [
+        ["css=#operations-HealthCheck-ApiHealthcheckPoiGet .opblock-summary-method", "css:finder"],
+        ["xpath=//div[@id='operations-HealthCheck-ApiHealthcheckPoiGet']/div/span", "xpath:idRelative"],
+        ["xpath=//div/div/span/div/div/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4cc2a889-bce2-418b-aad3-abb058f562a8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//div[@id='operations-HealthCheck-ApiHealthcheckPoiGet']/div[2]/div/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Try it out')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8aea59ec-0303-44b6-8efa-34dd9fba3d80",
+      "comment": "",
+      "command": "click",
+      "target": "css=.execute",
+      "targets": [
+        ["css=.execute", "css:finder"],
+        ["xpath=//div[@id='operations-HealthCheck-ApiHealthcheckPoiGet']/div[2]/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Execute')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "29737173-4cac-47c1-8b78-b6fac107b7dd",
+      "comment": "Asserting health probe returned 200",
+      "command": "assertText",
+      "target": "css=.responses-table:nth-child(4) .response > .response-col_status",
+      "targets": [],
+      "value": "200"
+    }]
   }],
   "suites": [{
     "id": "a94ca64a-b332-489a-abb8-b8526f20654f",

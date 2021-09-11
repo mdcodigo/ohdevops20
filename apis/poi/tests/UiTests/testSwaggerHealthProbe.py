@@ -10,9 +10,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-class TestRunSwaggerHealthCheck():
+class TestTestSwaggerHealthProbe():
   def setup_method(self, method):
-  
     from selenium.webdriver.chrome.options import Options
     options = Options()
     options.add_argument("--headless")
@@ -31,23 +30,11 @@ class TestRunSwaggerHealthCheck():
   def teardown_method(self, method):
     self.driver.quit()
   
-  def test_runSwaggerHealthCheck(self):
+  def test_testSwaggerHealthProbe(self):
     self.driver.get("https://openhackdevopsapp-poi-0x001-staging.azurewebsites.net/api/docs/poi/index.html")
     self.driver.set_window_size(516, 690)
     self.driver.find_element(By.CSS_SELECTOR, "#operations-HealthCheck-ApiHealthcheckPoiGet .opblock-summary-method").click()
     self.driver.find_element(By.CSS_SELECTOR, ".btn").click()
-    element = self.driver.find_element(By.CSS_SELECTOR, ".btn")
-    actions = ActionChains(self.driver)
-    actions.move_to_element(element).perform()
-    element = self.driver.find_element(By.CSS_SELECTOR, "body")
-    actions = ActionChains(self.driver)
-    #actions.move_to_element(element, 0, 0).perform()
-    actions.move_to_element(element).perform()
     self.driver.find_element(By.CSS_SELECTOR, ".execute").click()
-    element = self.driver.find_element(By.CSS_SELECTOR, ".execute")
-    actions = ActionChains(self.driver)
-    actions.move_to_element(element).perform()
-    element = self.driver.find_element(By.CSS_SELECTOR, "body")
-    actions = ActionChains(self.driver)
-    #actions.move_to_element(element, 0, 0).perform()
-    actions.move_to_element(element).perform()
+    assert self.driver.find_element(By.CSS_SELECTOR, ".responses-table:nth-child(4) .response > .response-col_status").text == "200"
+  
