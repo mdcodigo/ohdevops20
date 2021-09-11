@@ -1,0 +1,6 @@
+capabilities:
+  browserName: "firefox"
+#baseUrl: "https://www.seleniumhq.org"
+#server: "http://localhost:4444/wd/hub"
+  firefoxOptions:
+    binary: 'C:\Users\maduva\AppData\Roaming\geckodriver.exe'
