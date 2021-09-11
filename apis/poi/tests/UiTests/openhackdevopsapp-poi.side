@@ -1,0 +1,118 @@
+{
+  "id": "a3e6c5f4-3338-4d69-88a4-750de9861f10",
+  "version": "2.0",
+  "name": "openhackdevopsapp-poi",
+  "url": "https://openhackdevopsapp-poi-0x001-staging.azurewebsites.net",
+  "tests": [{
+    "id": "fc7cd7c2-c477-42b5-8b9f-e8e570deb198",
+    "name": "RunSwaggerHealthCheck",
+    "commands": [{
+      "id": "7b1cdd20-5076-4319-acf3-1993050b3b94",
+      "comment": "",
+      "command": "open",
+      "target": "/api/docs/poi/index.html",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e6b293b6-7afa-4798-9c85-1bea42c0f8fc",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "516x690",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "41acee3c-4596-451c-bd47-5b1287e4ed55",
+      "comment": "",
+      "command": "click",
+      "target": "css=#operations-HealthCheck-ApiHealthcheckPoiGet .opblock-summary-method",
+      "targets": [
+        ["css=#operations-HealthCheck-ApiHealthcheckPoiGet .opblock-summary-method", "css:finder"],
+        ["xpath=//div[@id='operations-HealthCheck-ApiHealthcheckPoiGet']/div/span", "xpath:idRelative"],
+        ["xpath=//div/div/span/div/div/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "06e9284f-e935-43c2-91e2-fb72f41532d8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//div[@id='operations-HealthCheck-ApiHealthcheckPoiGet']/div[2]/div/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Try it out')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "6b5b9e70-803b-453a-bc9c-8cde90c2c345",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//div[@id='operations-HealthCheck-ApiHealthcheckPoiGet']/div[2]/div/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Try it out')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a2a3cfc2-4c02-487d-a914-0645854b875d",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.try-out__btn",
+      "targets": [
+        ["css=.try-out__btn", "css:finder"],
+        ["xpath=//div[@id='operations-HealthCheck-ApiHealthcheckPoiGet']/div[2]/div/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Cancel')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "00f8a1d3-f73d-4b63-84fb-990a4d398dd8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.execute",
+      "targets": [
+        ["css=.execute", "css:finder"],
+        ["xpath=//div[@id='operations-HealthCheck-ApiHealthcheckPoiGet']/div[2]/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Execute')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ad6ed771-d5ce-4338-9e5e-cffdba442b28",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.execute",
+      "targets": [
+        ["css=.execute", "css:finder"],
+        ["xpath=//div[@id='operations-HealthCheck-ApiHealthcheckPoiGet']/div[2]/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Execute')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e096897c-c7aa-4bde-b4a2-c09d79b82f9d",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.execute",
+      "targets": [
+        ["css=.execute", "css:finder"],
+        ["xpath=//div[@id='operations-HealthCheck-ApiHealthcheckPoiGet']/div[2]/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Execute')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "a94ca64a-b332-489a-abb8-b8526f20654f",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["fc7cd7c2-c477-42b5-8b9f-e8e570deb198"]
+  }],
+  "urls": ["https://openhackdevopsapp-poi-0x001-staging.azurewebsites.net/"],
+  "plugins": []
+}
