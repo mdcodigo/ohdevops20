@@ -36,8 +36,8 @@ jobs:
         sudo pip3 install selenium
         sudo pip3 install pytest
        
-     - name: Run Test 01/n
-       run: pytest apis/poi/tests/UiTests/test_runSwaggerHealthCheck.py
+     - name: Run Test - Swagger Health Probe
+       run: pytest apis/poi/tests/UiTests/testSwaggerHealthProbe.py
         
 #     - shell: bash
 #       name: Install Chromer Driver & Selenium Side Runner
