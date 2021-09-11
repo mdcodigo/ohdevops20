@@ -81,3 +81,11 @@ jobs:
 #      env:
 #        ACR: ${{ env.ACR_URL}}      
 #      run: docker push "$ACR"/devopsoh/api-poi:${{github.run_number}}
+
+
+    - name: Invoke 'POI CD' workflow with inputs
+      uses: benc-uk/workflow-dispatch@v1
+      with:
+        workflow: POI CD
+        token: ${{ secrets.ACTIONS_PAT }}
+        inputs: '{ "Reason": "Fired by .NET POI CI Worflow." }'
