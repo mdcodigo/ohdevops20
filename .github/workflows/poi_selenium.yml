@@ -43,7 +43,8 @@ jobs:
        
      - shell: bash
        name: Cat openhackdevopsapp-poi.side
-       run: cat /apis/poi/tests/UiTests/openhackdevopsapp-poi.side
+       #run: cat /apis/poi/tests/UiTests/openhackdevopsapp-poi.side
+       run: ls -R -G
       
      - shell: bash
        name: Run Selenium UI Tests
