@@ -15,7 +15,7 @@ env:
 on:
   workflow_dispatch:
     inputs:
-      name:
+      reason:
         description: 'Reason'
         required: true
         default: 'N/A'
