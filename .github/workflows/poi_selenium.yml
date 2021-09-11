@@ -31,15 +31,17 @@ jobs:
      steps:
      - uses: actions/checkout@v2
 
-     - shell: bash
-       name: Install Chrome
-       run: |
-        chmod +x ./apis/poi/tests/UiTests/InstallChrome.sh
-        ./apis/poi/tests/UiTests/InstallChrome.sh
+#     - shell: bash
+#       name: Install Chrome
+#       run: |
+#        chmod +x ./apis/poi/tests/UiTests/InstallChrome.sh
+#        ./apis/poi/tests/UiTests/InstallChrome.sh
         
      - shell: bash
-       name: Install Selenium Side Runner
-       run: npm install -g selenium-side-runner
+       name: Install Chromer Driver & Selenium Side Runner
+       run: |
+        npm install -g chromedriver
+        npm install -g selenium-side-runner
        
      - shell: bash
        name: Cat openhackdevopsapp-poi.side
@@ -48,4 +50,4 @@ jobs:
       
      - shell: bash
        name: Run Selenium UI Tests
-       run: selenium-side-runner -c "browserName=chrome chromeOptions.args=[headless]" apis/poi/tests/UiTests/openhackdevopsapp-poi.side --debug
+       run: selenium-side-runner -c "browserName=chrome chromeOptions.args=[headless, disable-gpu, no-sandbox, disable-extensions, disable-dev-shm-usage]" apis/poi/tests/UiTests/openhackdevopsapp-poi.side --debug
