@@ -19,10 +19,10 @@ on:
         description: 'Reason'
         required: true
         default: 'N/A'
-  push:
-    branches: [ master ]
-    paths: 
-      - apis/poi/**  
+#  push:
+#    branches: [ master ]
+#    paths: 
+#      - apis/poi/**  
       #*** Only for dev pourpourses ;) ***
       #- .github/workflows/poi_blue_green.yaml
 #  pull_request:
