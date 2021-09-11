@@ -48,4 +48,4 @@ jobs:
       
      - shell: bash
        name: Run Selenium UI Tests
-       run: selenium-side-runner -c "chromeOptions.args=[headless]" apis/poi/tests/UiTests/openhackdevopsapp-poi.side --debug
+       run: selenium-side-runner -c "browserName=chrome chromeOptions.args=[headless]" apis/poi/tests/UiTests/openhackdevopsapp-poi.side --debug
