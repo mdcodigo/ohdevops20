@@ -31,23 +31,18 @@ jobs:
      steps:
      - uses: actions/checkout@v2
 
-#     - shell: bash
-#       name: Install Chrome
-#       run: |
-#        chmod +x ./apis/poi/tests/UiTests/InstallChrome.sh
-#        ./apis/poi/tests/UiTests/InstallChrome.sh
-        
-     - shell: bash
-       name: Install Chromer Driver & Selenium Side Runner
-       run: |
-        npm install -g chromedriver
-        npm install -g selenium-side-runner
+     - name: Install Selenium for Python
+       run: sudo pip3 install selenium
        
-     - shell: bash
-       name: Cat openhackdevopsapp-poi.side
-       run: cat apis/poi/tests/UiTests/openhackdevopsapp-poi.side
-       #run: ls -R -G
-      
-     - shell: bash
-       name: Run Selenium UI Tests
-       run: selenium-side-runner -c "browserName=chrome chromeOptions.args=[headless, disable-gpu, no-sandbox, disable-extensions, disable-dev-shm-usage]" apis/poi/tests/UiTests/openhackdevopsapp-poi.side --debug
+     - name: Run Test 01/n
+       run: python3 apis/poi/tests/UiTests/test_runSwaggerHealthCheck.py
+        
+#     - shell: bash
+#       name: Install Chromer Driver & Selenium Side Runner
+#       run: |
+#        npm install -g chromedriver
+#        npm install -g selenium-side-runner
+#      
+#     - shell: bash
+#       name: Run Selenium UI Tests
+#       run: selenium-side-runner -c "browserName=chrome chromeOptions.args=[headless, disable-gpu, no-sandbox, disable-extensions, disable-dev-shm-usage]" apis/poi/tests/UiTests/openhackdevopsapp-poi.side --debug
