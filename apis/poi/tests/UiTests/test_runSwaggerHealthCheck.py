@@ -12,7 +12,18 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 class TestRunSwaggerHealthCheck():
   def setup_method(self, method):
-    self.driver = webdriver.Chrome()
+  
+    from selenium.webdriver.chrome.options import Options
+    options = Options()
+    options.add_argument("--headless")
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('disable-infobars')
+    options.add_argument("--disable-extensions")
+    self.driver = webdriver.Chrome(chrome_options=options)
+  
+    #self.driver = webdriver.Chrome()
     self.vars = {}
   
   def teardown_method(self, method):
@@ -36,4 +47,3 @@ class TestRunSwaggerHealthCheck():
     element = self.driver.find_element(By.CSS_SELECTOR, "body")
     actions = ActionChains(self.driver)
     actions.move_to_element(element, 0, 0).perform()
-  
