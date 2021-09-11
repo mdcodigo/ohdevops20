@@ -42,5 +42,9 @@ jobs:
        run: npm install -g selenium-side-runner
 
      - shell: bash
+       name: List repo's content
+       run: ls
+       
+     - shell: bash
        name: Run Selenium UI Tests
-       run: selenium-side-runner apis/poi/UiTests/openhackdevopsapp-poi.side
+       run: selenium-side-runner /apis/poi/UiTests/openhackdevopsapp-poi.side --debug
