@@ -1,12 +1,17 @@
-###DUMMY CHANGE 002
-name: .NET
+name: .NET API POI
 
 on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Reason'
+        required: true
+        default: 'N/A'
   push:
     branches: [ master ]
     paths:
       - 'apis/poi/**'
-      - '.github/workflows/dotnet.yml'
+      #- '.github/workflows/dotnet.yml'
   pull_request:
     branches: [ master ]
     paths:    
