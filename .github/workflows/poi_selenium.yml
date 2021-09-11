@@ -31,11 +31,13 @@ jobs:
      steps:
      - uses: actions/checkout@v2
 
-     - name: Install Selenium for Python
-       run: sudo pip3 install selenium
+     - name: Install Selenium & Pytest
+       run: |
+        sudo pip3 install selenium
+        sudo pip3 install pytest
        
      - name: Run Test 01/n
-       run: python3 apis/poi/tests/UiTests/test_runSwaggerHealthCheck.py
+       run: pytest apis/poi/tests/UiTests/test_runSwaggerHealthCheck.py
         
 #     - shell: bash
 #       name: Install Chromer Driver & Selenium Side Runner
