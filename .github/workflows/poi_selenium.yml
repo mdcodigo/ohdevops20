@@ -39,12 +39,10 @@ jobs:
      - name: Run Test - Swagger Health Probe
        run: pytest apis/poi/tests/UiTests/testSwaggerHealthProbe.py
         
-#     - shell: bash
-#       name: Install Chromer Driver & Selenium Side Runner
-#       run: |
-#        npm install -g chromedriver
-#        npm install -g selenium-side-runner
-#      
+     - shell: bash
+       name: Install Selenium Side Runner
+       run:  npm install -g selenium-side-runner      
+      
      - shell: bash
        name: Run Test - Selenium UI Tests
        run: selenium-side-runner -c "browserName=chrome goog:chromeOptions.args=[disable-infobars, headless, disable-gpu, disable-extensions, disable-dev-shm-usage, no-sandbox]" apis/poi/tests/UiTests/openhackdevopsapp-poi.side --debug
