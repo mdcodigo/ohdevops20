@@ -45,6 +45,6 @@ jobs:
 #        npm install -g chromedriver
 #        npm install -g selenium-side-runner
 #      
-#     - shell: bash
-#       name: Run Selenium UI Tests
-#       run: selenium-side-runner -c "browserName=chrome chromeOptions.args=[headless, disable-gpu, no-sandbox, disable-extensions, disable-dev-shm-usage]" apis/poi/tests/UiTests/openhackdevopsapp-poi.side --debug
+     - shell: bash
+       name: Run Test - Selenium UI Tests
+       run: selenium-side-runner -c "browserName=chrome goog:chromeOptions.args=[disable-infobars, headless, disable-gpu, disable-extensions, disable-dev-shm-usage, no-sandbox]" apis/poi/tests/UiTests/openhackdevopsapp-poi.side --debug
