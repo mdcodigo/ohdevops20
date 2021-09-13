@@ -1,0 +1,2 @@
+az appservice plan update --resource-group rgOpenHackDevOps20 --name openhackxqzxmauhbxtiiplan --sku S1
+az webapp deployment slot create --name openhackdevopsapp-poi-0x001 --resource-group rgOpenHackDevOps20 --slot staging
