@@ -1,0 +1,30 @@
+name: Azure Web App Setup
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Reason'
+        required: false
+        default: 'N/A'
+        
+jobs:
+#Job 1/
+  az_webapp_setup:
+     name: Azure Web App & Service Plan Set Up
+     runs-on: ubuntu-latest
+     
+     steps:
+
+     - name: Azure authentication
+       uses: azure/login@v1
+       with:
+          creds: ${{ secrets.AZURE_CREDENTIALS  }}
+          
+     - shell: bash
+       name: Web App - Add Deployment Slot staging
+       run: az webapp deployment slot delete --name openhackdevopsapp-poi-0x001 --resource-group rgOpenHackDevOps20 --slot staging
+       
+     - shell: bash
+       name: App Service Plan Scale Up SKU
+       run: az appservice plan update --resource-group rgOpenHackDevOps20 --name openhackxqzxmauhbxtiiplan --sku FREE
