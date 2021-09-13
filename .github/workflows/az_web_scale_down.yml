@@ -11,7 +11,7 @@ on:
 jobs:
 #Job 1/
   az_webapp_setup:
-     name: Azure Web App & Service Plan Set Up
+     name: Azure Web App & Service Plan Scale Down
      runs-on: ubuntu-latest
      
      steps:
