@@ -47,7 +47,7 @@ jobs:
       if: success() || failure()  # run this step even if previous step failed
       with:
         name: API POI Tests       # Name of the check run which will be created
-        path: apis/poi/tests/testresults/*.trx   #Path to test results
+        path: apis/poi/tests/UnitTests/testresults/*.trx,apis/poi/tests/IntegrationTests/testresults/*.trx   #Path to test results
         reporter: dotnet-trx      #Reporter      
       
 #Opens An Issue Only When CI Fails
