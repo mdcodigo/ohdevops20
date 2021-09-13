@@ -1,4 +1,4 @@
-name: Azure Web App Setup
+name: Azure Web App Scale Down
 
 on:
   workflow_dispatch:
