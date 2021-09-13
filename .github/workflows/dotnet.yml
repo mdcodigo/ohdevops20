@@ -40,7 +40,7 @@ jobs:
       run: dotnet build --no-restore apis/poi/poi.sln
       
     - name: Test
-      run: dotnet test --no-build --verbosity normal -r testresults --logger "trx;logfilename=apipoi.trx" apis/poi/poi.sln
+      run: dotnet test --no-build --verbosity normal -r testresults --logger "trx" apis/poi/poi.sln
       
     - name: API POI Tests Report
       uses: dorny/test-reporter@v1
