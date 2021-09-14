@@ -49,13 +49,7 @@ jobs:
         name: API POI Tests       # Name of the check run which will be created
         path: apis/poi/tests/UnitTests/testresults/*.trx,apis/poi/tests/IntegrationTests/testresults/*.trx   #Path to test results
         reporter: dotnet-trx      #Reporter
-        
-    - name: API POI Tests Report v2
-      uses: EnricoMi/publish-unit-test-result-action@v1
-      if: always()
-      with:
-        files: apis/poi/tests/**/*.trx
-      
+     
 #Opens An Issue Only When CI Fails
     - uses: actions/github-script@0.9.0
       if: failure()
