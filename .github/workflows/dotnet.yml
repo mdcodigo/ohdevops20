@@ -104,5 +104,6 @@ jobs:
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: POI CD
+          #Este token hay que crearlo no es un secreto del workflow, leer: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
           token: ${{ secrets.ACTIONS_PAT }}
           inputs: '{ "reason": "Fired by .NET POI CI Worflow." }'
