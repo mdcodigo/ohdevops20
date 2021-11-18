@@ -40,6 +40,12 @@ jobs:
      #needs: build
 
      steps:
+     
+     - shell: bash
+       name: Workflow Input Echo
+       run: |
+        echo "Name: " ${{ github.event.inputs.reason }}
+     
      - uses: actions/checkout@v2
 
      - shell: bash
