@@ -27,9 +27,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Workflow Input Echo
-      run: echo "Name: ${{ github.event.inputs.name }}"
-    
+   
     - uses: actions/checkout@v2
     
     - name: Setup .NET
