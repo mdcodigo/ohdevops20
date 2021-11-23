@@ -1,0 +1,103 @@
+name: api-poi-cd
+
+env:
+  poi_path: apis/poi/**
+  registry: openhackxqzxmauhbxtiiacr.azurecr.io
+  repository: devopsoh/api-poi
+  docker_path: apis/poi/web
+  staging_url: https://openhackdevopsapp-poi-0x001-staging.azurewebsites.net
+  prod_url: https://openhackdevopsapp-poi-0x001.azurewebsites.net
+  resource_group: rgOpenHackDevOps20
+  webapp_name: openhackdevopsapp-poi-0x001
+  build_name: POI
+  ACR_URL: 'openhackxqzxmauhbxtiiacr.azurecr.io'
+  
+on:
+  workflow_dispatch:
+    inputs: 
+      reason:
+        description: 'Reason'
+        required: true
+        default: 'N/A'
+      imagetag: 
+        description: 'imagen a desplegar'
+        required: true
+              
+jobs: 
+    deploy_staging: 
+      runs-on: ubuntu-latest
+      
+      steps:
+        - name: Azure authentication
+          uses: azure/login@v1
+          with:
+                creds: ${{ secrets.AZURE_CREDENTIALS  }}
+
+        - name: Azure WebApp
+          uses: Azure/webapps-deploy@v2
+          with:
+            app-name: ${{ env.webapp_name }}
+            slot-name: staging
+              #images: openhackxqzxmauhbxtiiacr.azurecr.io/devopsoh/api-poi:7
+            images: ${{ env.registry }}/${{ env.repository }}:${{ github.event.inputs.imagetag }} 
+          
+        - name: Staging Web Validate
+          env:
+            URL: ${{ env.staging_url }}
+          run: |
+              sleep 60
+              res=$(curl -s -w "%{http_code}" -o resp.txt "$URL"/api/healthcheck/poi); if [ $res -eq 200 ]; then echo "HTTP:"$res; else exit $res; fi
+              cat resp.txt
+              if grep -q "Healthy" resp.txt ; then echo "API POI Healthy"; else exit 2; fi
+      
+        - uses: actions/github-script@0.9.0
+          if: failure()
+          with:
+            github-token: ${{secrets.GITHUB_TOKEN}}
+            script: |
+              let body = "${{ env.build_name }} Worflow Staging Web Test Failure \n Build Number: ${{ github.run_number }} \n Build Log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }} \n SHA: [${{ github.sha }}](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) \n";
+              github.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: "${{ env.build_name }} Workflow ${{ github.run_number }} Staging Web Test Failed! ",
+                body: body
+              });
+
+    swap_staging_prod: 
+      runs-on: ubuntu-latest
+      needs: deploy_staging
+      
+      steps:
+        - name: Azure authentication
+          uses: azure/login@v1
+          with:
+                creds: ${{ secrets.AZURE_CREDENTIALS  }}
+                
+        - name: slot swap / stagging production
+          run: az webapp deployment slot swap  -g rgopenhackdevops20 -n openhackdevopsapp-poi-0x001 --slot staging --target-slot production
+
+        - name: Prod Web Validate
+          env:
+            URL: ${{ env.prod_url }}
+          run: |
+              sleep 60
+              res=$(curl -s -w "%{http_code}" -o resp.txt "$URL"/api/healthcheck/poi); if [ $res -eq 200 ]; then echo "HTTP:"$res; else exit $res; fi
+              cat resp.txt
+              if grep -q "Healthy" resp.txt ; then echo "API POI Healthy"; else exit 2; fi
+              
+        - name: ROLLBACK :( - Slot swap / production stagging
+          if: failure()
+          run: az webapp deployment slot swap  -g rgopenhackdevops20 -n openhackdevopsapp-poi-0x001 --slot staging --target-slot production              
+
+        - uses: actions/github-script@0.9.0
+          if: failure()
+          with:
+            github-token: ${{secrets.GITHUB_TOKEN}}
+            script: |
+              let body = "${{ env.build_name }} Worflow Production Web Test Failure \n Build Number: ${{ github.run_number }} \n Build Log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }} \n SHA: [${{ github.sha }}](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) \n";
+              github.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: "${{ env.build_name }} Workflow ${{ github.run_number }} FALLÓ EL Web Test EN PRODUCIÓN!!!!!! ",
+                body: body
+              });

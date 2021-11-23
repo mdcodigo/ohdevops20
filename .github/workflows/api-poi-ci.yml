@@ -1,0 +1,79 @@
+name: API POI CI
+
+on:
+ push:
+    branches: [ main ]
+    paths:
+      - 'apis/poi/**'
+      
+env:
+  ACR_URL: 'openhackxqzxmauhbxtiiacr.azurecr.io'
+  
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 2.1.x
+        
+    - name: restore
+      run: dotnet restore apis/poi/poi.sln
+      
+      
+    - name: build 
+      run: dotnet build --no-restore apis/poi/poi.sln   
+
+    - name: Test
+      run: dotnet test --no-build --verbosity normal -r testresults --logger "trx" apis/poi/poi.sln
+      
+    - name: API POI Tests Report
+      uses: dorny/test-reporter@v1
+      if: success() || failure()  # run this step even if previous step failed
+      with:
+        name: API POI Tests       # Name of the check run which will be created
+        path: apis/poi/tests/UnitTests/testresults/*.trx,apis/poi/tests/IntegrationTests/testresults/*.trx   #Path to test results
+        reporter: dotnet-trx      #Reporter
+
+#Opens An Issue Only When CI Fails
+    
+    - uses: actions/github-script@0.9.0
+      if: failure()
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+          let body = "${{ env.build_name }} Worflow Failure \n Build Number: ${{ github.run_number }} \n Build Log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }} \n SHA: [${{ github.sha }}](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) \n";
+          github.issues.create
+          
+    - shell: bash
+      name: Docker build
+      env:
+        ACR: ${{ env.ACR_URL}}
+      run: docker build -t "$ACR"/devopsoh/api-poi:${{github.run_number}} --build-arg build_version=${{github.run_number}} apis/poi/web
+      
+    - shell: bash
+      name: Docker Login
+      env:
+        ACR_KEY: ${{ secrets.ACR_KEY }}
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}
+        ACR: ${{ env.ACR_URL}}
+      run: docker login "$ACR" -u "$DOCKER_USER" -p "$ACR_KEY"
+      
+    - shell: bash
+      name: Docker Push
+      env:
+        ACR: ${{ env.ACR_URL}}      
+      run: docker push "$ACR"/devopsoh/api-poi:${{github.run_number}}
+      
+    - name: Invoke 'POI CD' workflow with inputs
+      uses: benc-uk/workflow-dispatch@v1
+      with:
+          workflow: api-poi-cd
+          #Este token hay que crearlo no es un secreto del workflow, leer: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+          token: ${{ secrets.ACTIONS_PAT }}
+          inputs: '{ "reason": "Fired by .NET POI CI Worflow.", "imagetag":"${{github.run_number}}" }'
