@@ -32,3 +32,7 @@ jobs:
      - shell: bash
        name: Web App - Enable Managed Identity for Staging Slot
        run: az webapp identity assign -g rgOpenHackDevOps20 -n openhackdevopsapp-poi-0x001 --slot staging
+
+     - shell: bash
+       name: Web App - Enable CD for containers
+       run: az webapp deployment container config --enable-cd true --name openhackdevopsapp-poi-0x001 --resource-group rgOpenHackDevOps20 --slot staging
