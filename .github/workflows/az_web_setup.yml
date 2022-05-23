@@ -36,3 +36,8 @@ jobs:
      - shell: bash
        name: Web App - Enable CD for containers
        run: az webapp deployment container config --enable-cd true --name openhackdevopsapp-poi-0x001 --resource-group rgOpenHackDevOps20 --slot staging
+       
+     - shell: bash
+       name: Web App - Slot permissions to ACR (incomp).
+       run: |
+        az webapp identity show --name openhackdevopsapp-poi-0x001 --resource-group rgOpenHackDevOps20 --slot staging
