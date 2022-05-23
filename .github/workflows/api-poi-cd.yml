@@ -1,4 +1,4 @@
-name: api-poi-cd
+name: API POI CD
 
 env:
   poi_path: apis/poi/**
