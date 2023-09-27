@@ -31,7 +31,7 @@ class TestTestSwaggerHealthProbe():
     self.driver.quit()
   
   def test_testSwaggerHealthProbe(self):
-    self.driver.get("https://openhackdevopsapp-poi-0x001-staging.azurewebsites.net/api/docs/poi/index.html")
+    self.driver.get("https://openhackdevopsapp-poi-staging.azurewebsites.net/api/docs/poi/index.html")
     self.driver.set_window_size(516, 690)
     self.driver.find_element(By.CSS_SELECTOR, "#operations-HealthCheck-ApiHealthcheckPoiGet .opblock-summary-method").click()
     self.driver.find_element(By.CSS_SELECTOR, ".btn").click()

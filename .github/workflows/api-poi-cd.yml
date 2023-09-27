@@ -2,15 +2,15 @@ name: API POI CD
 
 env:
   poi_path: apis/poi/**
-  registry: openhackxqzxmauhbxtiiacr.azurecr.io
+  registry: ohdevops20acr01.azurecr.io
   repository: devopsoh/api-poi
   docker_path: apis/poi/web
-  staging_url: https://openhackdevopsapp-poi-0x001-staging.azurewebsites.net
-  prod_url: https://openhackdevopsapp-poi-0x001.azurewebsites.net
+  staging_url: https://openhackdevopsapp-poi-staging.azurewebsites.net
+  prod_url: https://openhackdevopsapp-poi.azurewebsites.net
   resource_group: rgOpenHackDevOps20
-  webapp_name: openhackdevopsapp-poi-0x001
+  webapp_name: openhackdevopsapp-poi
   build_name: POI
-  ACR_URL: 'openhackxqzxmauhbxtiiacr.azurecr.io'
+  ACR_URL: 'ohdevops20acr01.azurecr.io'
   
 on:
   workflow_dispatch:
@@ -74,7 +74,7 @@ jobs:
                 creds: ${{ secrets.AZURE_CREDENTIALS  }}
                 
         - name: slot swap / stagging production
-          run: az webapp deployment slot swap  -g rgopenhackdevops20 -n openhackdevopsapp-poi-0x001 --slot staging --target-slot production
+          run: az webapp deployment slot swap  -g rgopenhackdevops20 -n openhackdevopsapp-poi --slot staging --target-slot production
 
         - name: Prod Web Validate
           env:
@@ -87,7 +87,7 @@ jobs:
               
         - name: ROLLBACK :( - Slot swap / production stagging
           if: failure()
-          run: az webapp deployment slot swap  -g rgopenhackdevops20 -n openhackdevopsapp-poi-0x001 --slot staging --target-slot production              
+          run: az webapp deployment slot swap  -g rgopenhackdevops20 -n openhackdevopsapp-poi --slot staging --target-slot production              
 
         - uses: actions/github-script@0.9.0
           if: failure()
