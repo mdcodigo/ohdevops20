@@ -23,8 +23,8 @@ jobs:
           
      - shell: bash
        name: Web App - Delete Deployment Slot staging
-       run: az webapp deployment slot delete --name openhackdevopsapp-poi-0x001 --resource-group rgOpenHackDevOps20 --slot staging
+       run: az webapp deployment slot delete --name openhackdevopsapp-poi --resource-group rgOpenHackDevOps20 --slot staging
        
      - shell: bash
        name: App Service Plan Scale Down SKU - FREE
-       run: az appservice plan update --resource-group rgOpenHackDevOps20 --name openhackxqzxmauhbxtiiplan --sku FREE
+       run: az appservice plan update --resource-group rgOpenHackDevOps20 --name openhackdevopsapp --sku FREE
