@@ -2,7 +2,7 @@
   "id": "a3e6c5f4-3338-4d69-88a4-750de9861f10",
   "version": "2.0",
   "name": "openhackdevopsapp-poi",
-  "url": "https://openhackdevopsapp-poi-0x001-staging.azurewebsites.net",
+  "url": "https://openhackdevopsapp-poi-staging.azurewebsites.net",
   "tests": [{
     "id": "fc7cd7c2-c477-42b5-8b9f-e8e570deb198",
     "name": "RunSwaggerHealthCheck",
@@ -173,6 +173,6 @@
     "timeout": 300,
     "tests": ["fc7cd7c2-c477-42b5-8b9f-e8e570deb198"]
   }],
-  "urls": ["https://openhackdevopsapp-poi-0x001-staging.azurewebsites.net/"],
+  "urls": ["https://openhackdevopsapp-poi-staging.azurewebsites.net/"],
   "plugins": []
 }
