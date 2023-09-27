@@ -2,15 +2,15 @@ name: POI CD
 
 env:
   poi_path: apis/poi/**
-  registry: openhackxqzxmauhbxtiiacr.azurecr.io
+  registry: ohdevops20acr01.azurecr.io
   repository: devopsoh/api-poi
   docker_path: apis/poi/web
-  staging_url: https://openhackdevopsapp-poi-0x001-staging.azurewebsites.net
-  prod_url: hhttps://openhackdevopsapp-poi-0x001.azurewebsites.net
+  staging_url: https://openhackdevopsapp-poi-staging.azurewebsites.net
+  prod_url: hhttps://openhackdevopsapp-poi.azurewebsites.net
   resource_group: rgOpenHackDevOps20
-  webapp_name: openhackdevopsapp-poi-0x001
+  webapp_name: openhackdevopsapp-poi
   build_name: POI
-  ACR_URL: 'openhackxqzxmauhbxtiiacr.azurecr.io'
+  ACR_URL: 'ohdevops20acr01.azurecr.io'
   
 on:
   workflow_dispatch:
@@ -151,6 +151,6 @@ jobs:
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
           ACR: ${{ env.ACR_URL}}
         run: |
-          docker pull openhackxqzxmauhbxtiiacr.azurecr.io/devopsoh/api-poi:latest
-          docker tag openhackxqzxmauhbxtiiacr.azurecr.io/devopsoh/api-poi:latest openhackxqzxmauhbxtiiacr.azurecr.io/devopsoh/api-poi:staging
-          docker push openhackxqzxmauhbxtiiacr.azurecr.io/devopsoh/api-poi:staging
+          docker pull ohdevops20acr01.azurecr.io/devopsoh/api-poi:latest
+          docker tag ohdevops20acr01.azurecr.io/devopsoh/api-poi:latest ohdevops20acr01.azurecr.io/devopsoh/api-poi:staging
+          docker push ohdevops20acr01.azurecr.io/devopsoh/api-poi:staging
