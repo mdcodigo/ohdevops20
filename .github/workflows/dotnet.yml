@@ -19,7 +19,7 @@ on:
       - '.github/workflows/dotnet.yml'
       
 env:
-  ACR_URL: 'openhackxqzxmauhbxtiiacr.azurecr.io'
+  ACR_URL: 'ohdevops20acr01.azurecr.io'
       
 jobs:
   build:
