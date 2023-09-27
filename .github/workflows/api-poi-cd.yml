@@ -74,7 +74,7 @@ jobs:
                 creds: ${{ secrets.AZURE_CREDENTIALS  }}
                 
         - name: slot swap / stagging production
-          run: az webapp deployment slot swap  -g rgopenhackdevops20 -n openhackdevopsapp-poi-0x001 --slot staging --target-slot production
+          run: az webapp deployment slot swap  -g rgopenhackdevops20 -n openhackdevopsapp-poi --slot staging --target-slot production
 
         - name: Prod Web Validate
           env:
@@ -87,7 +87,7 @@ jobs:
               
         - name: ROLLBACK :( - Slot swap / production stagging
           if: failure()
-          run: az webapp deployment slot swap  -g rgopenhackdevops20 -n openhackdevopsapp-poi-0x001 --slot staging --target-slot production              
+          run: az webapp deployment slot swap  -g rgopenhackdevops20 -n openhackdevopsapp-poi --slot staging --target-slot production              
 
         - uses: actions/github-script@0.9.0
           if: failure()
